@@ -9,7 +9,7 @@ import matplotlib.image as mpimg
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature 
 # from cartopy.io.img_tiles import StamenTerrain
-from cartopy.io.img_tiles import Stamen
+import cartopy.io.img_tiles as cimgt
 
 def get_files_in_directory(path): 
     """
@@ -26,7 +26,7 @@ def get_files_in_directory(path):
 def cartesian2spherical(v):
     """
     Take an array of length corresponding to a 3-dimensional vector and returns a array of length 2
-    with co-latitade and longitude
+    with latitade and longitude
     """
     theta = np.arcsin(v[2])         #facu     theta = np.arccos(v[2]) 
     phi = np.arctan2(v[1], v[0])
@@ -36,18 +36,21 @@ def cartesian2spherical(v):
 
 def spherical2cartesian(v):
     """
+    calculates the cartesian coordinates of an array (or list) representing a vector in spherical coordimates
     v[0] = theta - Latitude
     """
     
-    x = np.cos(v[0]) * np.cos(v[1])  # x = np.sin(v[0]) * np.cos(v[1])
-    y = np.cos(v[0]) * np.sin(v[1])  # y = np.sin(v[0]) * np.sin(v[1])
-    z = np.sin(v[0])                 # z = np.cos(v[0])
+    x = np.cos(v[0]) * np.cos(v[1])  
+    y = np.cos(v[0]) * np.sin(v[1])  
+    z = np.sin(v[0])                 
     
     return [x,y,z]
 
 
 def GCD_cartesian(cartesian1, cartesian2):
-    
+    '''
+    Computes the great circle distance from the dot product of two vectors in cartesian coordinates 
+    '''
     dot = np.dot(cartesian1, cartesian2)
     if np.isnan(dot).any(): return np.nan
     if abs(dot) > 1: dot = round(dot)
@@ -55,61 +58,73 @@ def GCD_cartesian(cartesian1, cartesian2):
     
     return gcd
 
-# def PD(ArrayXYZ):
+def PD(ArrayXYZ):
+    '''
+    Calculates the principal component of an array of vectors in cartesian coordinates
+    '''
     
-#     Eval, Evec = eigen_decomposition(ArrayXYZ)
-#     mean = fisher_mean(ArrayXYZ)
     
-#     if GCD_cartesian(Evec[:,0], mean) < np.pi /3:
-#         return Evec[:,0]
-#     elif GCD_cartesian(Evec[:,0]*-1, mean)< np.pi /3:
-#         return Evec[:,0] * -1
-#     elif GCD_cartesian(Evec[:,1], mean)< np.pi /3:
-#         return Evec[:,1]
-#     elif GCD_cartesian(Evec[:,1]*-1, mean)< np.pi /3:
-#         return Evec[:,1] *-1               
-#     elif GCD_cartesian(Evec[:,2], mean)< np.pi /3:
-#         return Evec[:,2]
-#     elif GCD_cartesian(Evec[:,2]*-1, mean)< np.pi /3:
-#         return Evec[:,2]*-1
+    Eval, Evec = eigen_decomposition(ArrayXYZ)
+    mean = fisher_mean(ArrayXYZ)
     
-# def fisher_mean(ArrayXYZ):
+    if GCD_cartesian(Evec[:,0], mean) < np.pi /3:
+        return Evec[:,0]
+    elif GCD_cartesian(Evec[:,0]*-1, mean)< np.pi /3:
+        return Evec[:,0] * -1
+    elif GCD_cartesian(Evec[:,1], mean)< np.pi /3:
+        return Evec[:,1]
+    elif GCD_cartesian(Evec[:,1]*-1, mean)< np.pi /3:
+        return Evec[:,1] *-1               
+    elif GCD_cartesian(Evec[:,2], mean)< np.pi /3:
+        return Evec[:,2]
+    elif GCD_cartesian(Evec[:,2]*-1, mean)< np.pi /3:
+        return Evec[:,2]*-1
     
-#     sumx = ArrayXYZ[:,0].sum()
-#     sumy = ArrayXYZ[:,1].sum()
-#     sumz = ArrayXYZ[:,2].sum()
+def fisher_mean(ArrayXYZ):
+    '''
+    Numpy based calculation of the Fisher mean, computationally more efficient than pmagpy
+    '''
+    sumx = ArrayXYZ[:,0].sum()
+    sumy = ArrayXYZ[:,1].sum()
+    sumz = ArrayXYZ[:,2].sum()
     
-#     R = np.sqrt(sumx**2+sumy**2+sumz**2)
+    R = np.sqrt(sumx**2+sumy**2+sumz**2)
 
-#     meanxyz = [sumx/R, sumy/R, sumz/R]
+    meanxyz = [sumx/R, sumy/R, sumz/R]
     
-#     return meanxyz
+    return meanxyz
 
 
-# def get_k(df_vgps): 
-#     df_vgps['k'] = np.where(df_vgps['k'].isna(), ((140./df_vgps['alpha95'])**2)/(df_vgps['n']), df_vgps['k'])
-#     return df_vgps
+def get_k(df_vgps): 
+    '''
+    fills rows in which there's missing the kappa value and it is possible to compute from alpha and n
+    '''
+    df_vgps['k'] = np.where(df_vgps['k'].isna(), ((140./df_vgps['alpha95'])**2)/(df_vgps['n']), df_vgps['k'])
+    return df_vgps
 
 
-# def get_alpha95(df_vgps): 
-#     df_vgps['alpha95'] = np.where(df_vgps['alpha95'].isna(), 140.0/np.sqrt(df_vgps['n'] * df_vgps['k']),df_vgps['alpha95'])
-#     return df_vgps
+def get_alpha95(df_vgps): 
+    '''
+    fills rows in which there's missing the a95 value and it is possible to compute from kappa and n
+    '''
+    df_vgps['alpha95'] = np.where(df_vgps['alpha95'].isna(), 140.0/np.sqrt(df_vgps['n'] * df_vgps['k']),df_vgps['alpha95'])
+    return df_vgps
 
-# def get_angle(a, b, c):
+def get_angle(a, b, c):
     
-#     '''
-#     calculates the angle between three points in the sphere (b is pivot) using the law of cosines.
-#     arguments: a,b and c are cartesian points in the form [x,y,z]
-#     returns: an angle
-#     '''
+    '''
+    calculates the angle between three points in the sphere (b is pivot) using the law of cosines.
+    arguments: a,b and c are cartesian points in the form [x,y,z]
+    returns: an angle
+    '''
     
-#     s = GCD_cartesian(a, c)  # an angular distance between the first and last pole of a track
-#     p1 = GCD_cartesian(a, b)     # is a distance between the rotation pole and the first pole of a track 
-#     p2 = GCD_cartesian(c, b)    # is an angular distance between the rotation pole and the last pole of a track. 
+    s = GCD_cartesian(a, c)  # an angular distance between the first and last pole of a track
+    p1 = GCD_cartesian(a, b)     # is a distance between the rotation pole and the first pole of a track 
+    p2 = GCD_cartesian(c, b)    # is an angular distance between the rotation pole and the last pole of a track. 
     
-#     angle = np.arccos((np.cos(s) - np.cos(p1) * np.cos(p2)) / (np.sin(p1) * np.sin(p2)))
+    angle = np.arccos((np.cos(s) - np.cos(p1) * np.cos(p2)) / (np.sin(p1) * np.sin(p2)))
     
-#     return np.degrees(angle)
+    return np.degrees(angle)
 
 
 def print_pole_statistics(reported_pole, vgp_mean, vgp_mean_recomputed):
@@ -125,13 +140,13 @@ def print_pole_statistics(reported_pole, vgp_mean, vgp_mean_recomputed):
         pole_summary['A95']['Reported mean pole'] = reported_pole.iloc[0]['A95']
         pole_summary['N']['Reported mean pole'] = reported_pole.iloc[0]['N']
         
-    if len(vgp_mean) > 0:
+    if len(vgp_mean) > 2:
         pole_summary['Plon']['Mean pole (calculated from VGPs)'] = round(vgp_mean['dec'],1)
         pole_summary['Plat']['Mean pole (calculated from VGPs)'] = round(vgp_mean['inc'],1)
         pole_summary['A95']['Mean pole (calculated from VGPs)'] = round(vgp_mean['alpha95'],1)
         pole_summary['N']['Mean pole (calculated from VGPs)'] = round(vgp_mean['n'],1)
         
-    if len(vgp_mean_recomputed) > 0:
+    if len(vgp_mean_recomputed) > 2:
         pole_summary['Plon']['Mean pole (calculated from transformed directions)'] = round(vgp_mean_recomputed['dec'],1)
         pole_summary['Plat']['Mean pole (calculated from transformed directions)'] = round(vgp_mean_recomputed['inc'],1)
         pole_summary['A95']['Mean pole (calculated from transformed directions)'] = round(vgp_mean_recomputed['alpha95'],1)
@@ -142,15 +157,15 @@ def print_pole_statistics(reported_pole, vgp_mean, vgp_mean_recomputed):
     return pole_summary
        
     
-# def test_fishqq(merged):
-#     print('')
-#     print('Fisher distribution Q-Q test on VGPs')
-#     print('------------------------------------')
-#     if len(merged) <= 10: print ('Not enough sites to conduct quantile-quantile test')
-#     else:                              
-#         plt.figure(1,figsize=(7,3))
-#         ipmag.fishqq(di_block=merged)               
-#         plt.show()
+def test_fishqq(merged):
+    print('')
+    print('Fisher distribution Q-Q test on VGPs')
+    print('------------------------------------')
+    if len(merged) <= 10: print ('Not enough sites to conduct quantile-quantile test')
+    else:                              
+        plt.figure(1,figsize=(7,3))
+        ipmag.fishqq(di_block=merged)               
+        plt.show()
 
         
 def statistical_tests(di_mode1, di_mode2, vgps, 
@@ -262,47 +277,47 @@ def invert_polarity(mode1, mode2):
     return merged
 
 
-# def scale_bar(ax, length=None, location=(0.5, 0.05), 
-#               linewidth=3, zorder=100):
-#     """
-#     ax is the axes to draw the scalebar on.
-#     length is the length of the scalebar in km.
-#     location is center of the scalebar in axis coordinates.
-#     (ie. 0.5 is the middle of the plot)
-#     linewidth is the thickness of the scalebar.
-#     """
-#     #Get the limits of the axis in lat long
-#     llx0, llx1, lly0, lly1 = ax.get_extent(ccrs.PlateCarree())
-#     #Make tmc horizontally centred on the middle of the map,
-#     #vertically at scale bar location
-#     sbllx = (llx1 + llx0) / 2
-#     sblly = lly0 + (lly1 - lly0) * location[1]
-#     tmc = ccrs.TransverseMercator(sbllx, sblly)
-#     #Get the extent of the plotted area in coordinates in metres
-#     x0, x1, y0, y1 = ax.get_extent(tmc)
-#     #Turn the specified scalebar location into coordinates in metres
-#     sbx = x0 + (x1 - x0) * location[0]
-#     sby = y0 + (y1 - y0) * location[1]
+def scale_bar(ax, length=None, location=(0.5, 0.05), 
+              linewidth=3, zorder=100):
+    """
+    ax is the axes to draw the scalebar on.
+    length is the length of the scalebar in km.
+    location is center of the scalebar in axis coordinates.
+    (ie. 0.5 is the middle of the plot)
+    linewidth is the thickness of the scalebar.
+    """
+    #Get the limits of the axis in lat long
+    llx0, llx1, lly0, lly1 = ax.get_extent(ccrs.PlateCarree())
+    #Make tmc horizontally centred on the middle of the map,
+    #vertically at scale bar location
+    sbllx = (llx1 + llx0) / 2
+    sblly = lly0 + (lly1 - lly0) * location[1]
+    tmc = ccrs.TransverseMercator(sbllx, sblly)
+    #Get the extent of the plotted area in coordinates in metres
+    x0, x1, y0, y1 = ax.get_extent(tmc)
+    #Turn the specified scalebar location into coordinates in metres
+    sbx = x0 + (x1 - x0) * location[0]
+    sby = y0 + (y1 - y0) * location[1]
 
-#     #Calculate a scale bar length if none has been given
-#     #(Theres probably a more pythonic way of rounding the number but this works)
-#     if not length: 
-#         length = (x1 - x0) / 5000 #in km
-#         ndim = int(np.floor(np.log10(length))) #number of digits in number
-#         length = round(length, -ndim) #round to 1sf
-#         #Returns numbers starting with the list
-#         def scale_number(x):
-#             if str(x)[0] in ['1', '2', '5']: return int(x)        
-#             else: return scale_number(x - 10 ** ndim)
-#         length = scale_number(length) 
+    #Calculate a scale bar length if none has been given
+    #(Theres probably a more pythonic way of rounding the number but this works)
+    if not length: 
+        length = (x1 - x0) / 5000 #in km
+        ndim = int(np.floor(np.log10(length))) #number of digits in number
+        length = round(length, -ndim) #round to 1sf
+        #Returns numbers starting with the list
+        def scale_number(x):
+            if str(x)[0] in ['1', '2', '5']: return int(x)        
+            else: return scale_number(x - 10 ** ndim)
+        length = scale_number(length) 
 
-#     #Generate the x coordinate for the ends of the scalebar
-#     bar_xs = [sbx - length * 500, sbx + length * 500]
-#     #Plot the scalebar
-#     ax.plot(bar_xs, [sby, sby], transform=tmc, color='k', linewidth=linewidth,zorder=zorder)
-#     #Plot the scalebar label
-#     ax.text(sbx, sby, str(length) + ' km', transform=tmc,
-#             horizontalalignment='center', verticalalignment='bottom',zorder=zorder)
+    #Generate the x coordinate for the ends of the scalebar
+    bar_xs = [sbx - length * 500, sbx + length * 500]
+    #Plot the scalebar
+    ax.plot(bar_xs, [sby, sby], transform=tmc, color='k', linewidth=linewidth,zorder=zorder)
+    #Plot the scalebar label
+    ax.text(sbx, sby, str(length) + ' km', transform=tmc,
+            horizontalalignment='center', verticalalignment='bottom',zorder=zorder)
     
 
 def summary_figure(dataframe, vgp_mode1, vgp_mode2,
@@ -343,7 +358,8 @@ def summary_figure(dataframe, vgp_mode1, vgp_mode2,
     ax2.set_extent(study_extent)
     
     #tiler = StamenTerrain()
-    tiler = Stamen()
+    tiler = cimgt.Stamen(style = 'terrain')
+    
     mercator = tiler.crs
     ax2.add_image(tiler, 6)
 
@@ -406,7 +422,8 @@ def summary_figure(dataframe, vgp_mode1, vgp_mode2,
         pole_A95 = reported_pole['A95'].values[0]
         ipmag.plot_pole(ax4, pole_lon, pole_lat, pole_A95, 
                         label="reported pole", color='y')
-    if not len(vgp_mean) == 0:
+    # if not len(vgp_mean) == 0:
+    if len(vgp_mean) >2:
         ipmag.plot_pole(ax4, vgp_mean['dec'], vgp_mean['inc'], vgp_mean['alpha95'], 
                              label="recalculated pole", color='red')
     plt.legend(loc='lower center')    
@@ -484,75 +501,75 @@ def summary_figure(dataframe, vgp_mode1, vgp_mode2,
 #     plt.show()
 
 
-# def get_site_coordinates(D, I, Plat, Plon):
-#     '''
-#     The following function retrives Site coordinates from Dec/Inc and Plat/Plom
-#     NOTE! there are always two possible solutions so the outcome is a list in the form [[Slat1, Slon1],[Slat2, Slon2]]
-#     '''
-#     paleolat = np.degrees(np.arctan(0.5 * np.tan(np.radians(I))))
-#     colatitude = 90 - paleolat
-#     beta = np.degrees(np.arcsin((np.sin(np.radians(colatitude)) * np.sin(np.radians(D))) / (np.cos(np.radians(Plat)))))
+def get_site_coordinates(D, I, Plat, Plon):
+    '''
+    The following function retrives Site coordinates from Dec/Inc and Plat/Plom
+    NOTE! there are always two possible solutions so the outcome is a list in the form [[Slat1, Slon1],[Slat2, Slon2]]
+    '''
+    paleolat = np.degrees(np.arctan(0.5 * np.tan(np.radians(I))))
+    colatitude = 90 - paleolat
+    beta = np.degrees(np.arcsin((np.sin(np.radians(colatitude)) * np.sin(np.radians(D))) / (np.cos(np.radians(Plat)))))
     
-#     def guess(Slat):
-#         guess = np.arcsin(np.sin(np.radians(Slat)) * np.cos(np.radians(colatitude)) +
-#                      np.cos(np.radians(Slat)) * np.sin(np.radians(colatitude)) * np.cos(np.radians(D))) - np.radians(Plat)
-#         return np.degrees(guess)
+    def guess(Slat):
+        guess = np.arcsin(np.sin(np.radians(Slat)) * np.cos(np.radians(colatitude)) +
+                     np.cos(np.radians(Slat)) * np.sin(np.radians(colatitude)) * np.cos(np.radians(D))) - np.radians(Plat)
+        return np.degrees(guess)
 
-#     sol = optimize.root(guess, x0 = [-90,90],  method='hybr')
+    sol = optimize.root(guess, x0 = [-90,90],  method='hybr')
     
-#     res = []
+    res = []
     
-#     for i in sol.x:
+    for i in sol.x:
                 
-#         if np.cos(np.radians(colatitude)) > np.sin(np.radians(i)) * np.sin(np.radians(Plat)):            
-#             Slon = (Plon - beta) % 360.
-#         else:
-#             Slon = (Plon - 180 + beta) % 360.
+        if np.cos(np.radians(colatitude)) > np.sin(np.radians(i)) * np.sin(np.radians(Plat)):            
+            Slon = (Plon - beta) % 360.
+        else:
+            Slon = (Plon - 180 + beta) % 360.
         
-#         res.append([i,Slon])
+        res.append([i,Slon])
     
-#     return res
+    return res
 
-# def orientation_matrix(ArrayXYZ):
-#     '''input : np.array of x,y,z coordinates
-#     returns the orientation matrix
-#     '''
-#     X =[
-#         [sum(ArrayXYZ[:,0]*ArrayXYZ[:,0]),sum(ArrayXYZ[:,0]*ArrayXYZ[:,1]),sum(ArrayXYZ[:,0]*ArrayXYZ[:,2])],
-#         [sum(ArrayXYZ[:,0]*ArrayXYZ[:,1]),sum(ArrayXYZ[:,1]*ArrayXYZ[:,1]),sum(ArrayXYZ[:,1]*ArrayXYZ[:,2])],
-#         [sum(ArrayXYZ[:,0]*ArrayXYZ[:,2]),sum(ArrayXYZ[:,1]*ArrayXYZ[:,2]),sum(ArrayXYZ[:,2]*ArrayXYZ[:,2])]
-#         ]
-#     X = np.array(X) / len(ArrayXYZ)
+def orientation_matrix(ArrayXYZ):
+    '''input : np.array of x,y,z coordinates
+    returns the orientation matrix
+    '''
+    X =[
+        [sum(ArrayXYZ[:,0]*ArrayXYZ[:,0]),sum(ArrayXYZ[:,0]*ArrayXYZ[:,1]),sum(ArrayXYZ[:,0]*ArrayXYZ[:,2])],
+        [sum(ArrayXYZ[:,0]*ArrayXYZ[:,1]),sum(ArrayXYZ[:,1]*ArrayXYZ[:,1]),sum(ArrayXYZ[:,1]*ArrayXYZ[:,2])],
+        [sum(ArrayXYZ[:,0]*ArrayXYZ[:,2]),sum(ArrayXYZ[:,1]*ArrayXYZ[:,2]),sum(ArrayXYZ[:,2]*ArrayXYZ[:,2])]
+        ]
+    X = np.array(X) / len(ArrayXYZ)
     
-#     return X
+    return X
 
-# def eigen_decomposition(ArrayXYZ):
-#     '''
-#     input: np.array of direction cosines
-#     outuput : watch out to the shape !!! => eigen_vectors[:,0] => represents the principal direction vector
-#     '''  
-#     Means = [ArrayXYZ[:,0].mean(),ArrayXYZ[:,1].mean(),ArrayXYZ[:,2].mean()]   
+def eigen_decomposition(ArrayXYZ):
+    '''
+    input: np.array of direction cosines
+    outuput : watch out to the shape !!! => eigen_vectors[:,0] => represents the principal direction vector
+    '''  
+    Means = [ArrayXYZ[:,0].mean(),ArrayXYZ[:,1].mean(),ArrayXYZ[:,2].mean()]   
 
-#     X = orientation_matrix(ArrayXYZ)
-#     eigenValues, eigenVectors = np.linalg.eig(X)
+    X = orientation_matrix(ArrayXYZ)
+    eigenValues, eigenVectors = np.linalg.eig(X)
     
-#     #the following block sorts the eigenvectros acrodnig to the eigenvalues
-#     idx = eigenValues.argsort()[::-1]   
-#     eigenValues = eigenValues[idx]
-#     eigenVectors = eigenVectors[:,idx]
+    #the following block sorts the eigenvectros acrodnig to the eigenvalues
+    idx = eigenValues.argsort()[::-1]   
+    eigenValues = eigenValues[idx]
+    eigenVectors = eigenVectors[:,idx]
            
-#     return eigenValues, eigenVectors
+    return eigenValues, eigenVectors
 
-# def shape(ArrayXYZ):
-#     '''given an array of direction cosines [x,y,z], computes its eigen parameter and 
-#     returns the shape as [oblateness, prolateness,collinearity(K),coplanarity(M)]'''
-#     eigen_values = eigen_decomposition(ArrayXYZ)[0]
+def shape(ArrayXYZ):
+    '''given an array of direction cosines [x,y,z], computes its eigen parameter and 
+    returns the shape as [oblateness, prolateness,collinearity(K),coplanarity(M)]'''
+    eigen_values = eigen_decomposition(ArrayXYZ)[0]
     
-#     O = np.log(eigen_values[1]/eigen_values[2]) # Oblateness
-#     P = np.log(eigen_values[0]/eigen_values[1]) # Prolateness
-#     K = np.log(eigen_values[0]/eigen_values[1])/np.log(eigen_values[1]/eigen_values[2]) #Collinearity
-#     M = np.log(eigen_values[0]/eigen_values[2]) #Coplanarity
-#     return [O, P, K, M] 
+    O = np.log(eigen_values[1]/eigen_values[2]) # Oblateness
+    P = np.log(eigen_values[0]/eigen_values[1]) # Prolateness
+    K = np.log(eigen_values[0]/eigen_values[1])/np.log(eigen_values[1]/eigen_values[2]) #Collinearity
+    M = np.log(eigen_values[0]/eigen_values[2]) #Coplanarity
+    return [O, P, K, M] 
 
 # def get_mean_age (df, name, mean_age, min_age, max_age, verbose=True):
 #     """
