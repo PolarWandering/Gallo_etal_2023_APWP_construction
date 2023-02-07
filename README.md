@@ -1,5 +1,3 @@
-# Gallo_etal_2023_APWP_construction
-
 ## ***Jupyter Notebooks to accompany the paper:***
     
 # ***Embracing uncertainty to resolve polar wander: a North American case study***
