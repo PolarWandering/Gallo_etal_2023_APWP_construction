@@ -8,8 +8,8 @@ from matplotlib.gridspec import GridSpec
 import matplotlib.image as mpimg
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature 
-from cartopy.io.img_tiles import StamenTerrain
-
+# from cartopy.io.img_tiles import StamenTerrain
+from cartopy.io.img_tiles import Stamen
 
 def get_files_in_directory(path): 
     """
@@ -305,129 +305,130 @@ def invert_polarity(mode1, mode2):
 #             horizontalalignment='center', verticalalignment='bottom',zorder=zorder)
     
 
-# def summary_figure(dataframe, vgp_mode1, vgp_mode2,
-#                    reported_pole, vgp_mean, pole_folder):
+def summary_figure(dataframe, vgp_mode1, vgp_mode2,
+                   reported_pole, vgp_mean, pole_folder):
     
-#     fig = plt.figure(figsize=(8, 12))
+    fig = plt.figure(figsize=(8, 12))
 
-#     NA_extent = [-120, -65, 15, 65]
-#     central_lon = np.mean(NA_extent[:2])
-#     central_lat = np.mean(NA_extent[2:]) 
-#     NA_proj = ccrs.AlbersEqualArea(central_lon, central_lat)
+    NA_extent = [-120, -65, 15, 65]
+    central_lon = np.mean(NA_extent[:2])
+    central_lat = np.mean(NA_extent[2:]) 
+    NA_proj = ccrs.AlbersEqualArea(central_lon, central_lat)
 
-#     lat_buffer = 0.05 * (max(dataframe['slat'])-min(dataframe['slat']))
-#     study_extent = [min(dataframe['slon']),max(dataframe['slon']),
-#                     min(dataframe['slat'])-lat_buffer,
-#                     max(dataframe['slat'])+lat_buffer]
-#     study_proj = ccrs.Mercator()
+    lat_buffer = 0.05 * (max(dataframe['slat'])-min(dataframe['slat']))
+    study_extent = [min(dataframe['slon']),max(dataframe['slon']),
+                    min(dataframe['slat'])-lat_buffer,
+                    max(dataframe['slat'])+lat_buffer]
+    study_proj = ccrs.Mercator()
 
-#     vgp_proj = ccrs.Orthographic(
-#             central_longitude=0, central_latitude=90)
+    vgp_proj = ccrs.Orthographic(
+            central_longitude=0, central_latitude=90)
 
-#     gs = GridSpec(4, 2, 
-#                   width_ratios=[1, 1], 
-#                   height_ratios=[1, 1, 0.8, 1.1])
+    gs = GridSpec(4, 2, 
+                  width_ratios=[1, 1], 
+                  height_ratios=[1, 1, 0.8, 1.1])
 
-#     ax1 = fig.add_subplot(gs[0], projection=NA_proj)
-#     ax1.set_extent(NA_extent)
-#     ax1.stock_img()
-#     ax1.add_feature(cfeature.BORDERS)
-#     ax1.gridlines(draw_labels=False)
-#     ax1.add_feature(cfeature.LAND)
-#     ax1.add_feature(cfeature.COASTLINE)
-#     ax1.scatter(x = dataframe['slon'], y = dataframe['slat'], color='r', s=20, 
-#                 marker='*', transform=ccrs.PlateCarree(),zorder=100,label='site locations')
-#     plt.legend()
+    ax1 = fig.add_subplot(gs[0], projection=NA_proj)
+    ax1.set_extent(NA_extent)
+    ax1.stock_img()
+    ax1.add_feature(cfeature.BORDERS)
+    ax1.gridlines(draw_labels=False)
+    ax1.add_feature(cfeature.LAND)
+    ax1.add_feature(cfeature.COASTLINE)
+    ax1.scatter(x = dataframe['slon'], y = dataframe['slat'], color='r', s=20, 
+                marker='*', transform=ccrs.PlateCarree(),zorder=100,label='site locations')
+    plt.legend()
     
-#     ax2 = fig.add_subplot(gs[1], projection=study_proj)
-#     ax2.set_extent(study_extent)
+    ax2 = fig.add_subplot(gs[1], projection=study_proj)
+    ax2.set_extent(study_extent)
     
-#     tiler = StamenTerrain()
-#     mercator = tiler.crs
-#     ax2.add_image(tiler, 6)
+    #tiler = StamenTerrain()
+    tiler = Stamen()
+    mercator = tiler.crs
+    ax2.add_image(tiler, 6)
 
-#     gl = ax2.gridlines(draw_labels=True)
-#     gl.xlabels_bottom = False
-#     gl.ylabels_left = False
+    gl = ax2.gridlines(draw_labels=True)
+    gl.xlabels_bottom = False
+    gl.ylabels_left = False
 
-#     ax2.scatter(x = dataframe['slon'], y = dataframe['slat'], color='r', s=20, 
-#                 marker='*', transform=ccrs.PlateCarree(),zorder=100,label='site locations')
-#     scale_bar(ax2, 10)
+    ax2.scatter(x = dataframe['slon'], y = dataframe['slat'], color='r', s=20, 
+                marker='*', transform=ccrs.PlateCarree(),zorder=100,label='site locations')
+    scale_bar(ax2, 10)
 
-#     ax3 = fig.add_subplot(gs[2])
-#     ipmag.plot_net()
-#     ipmag.plot_di(dataframe['dec'].tolist(), dataframe['inc'].tolist(), 
-#                         label = "directions")
-#     ax3.set_title('site mean directions', 
-#                   y=-0.1, backgroundcolor= 'white')
+    ax3 = fig.add_subplot(gs[2])
+    ipmag.plot_net()
+    ipmag.plot_di(dataframe['dec'].tolist(), dataframe['inc'].tolist(), 
+                        label = "directions")
+    ax3.set_title('site mean directions', 
+                  y=-0.1, backgroundcolor= 'white')
 
-#     lat_grid=[-60.0, -30.0, 0.0, 30.0, 60.0]
-#     lon_grid=[-180.0, -150.0, -120.0, -90.0, -60.0, -30.0, 0.0, 30.0, 60.0, 90.0, 120.0, 150.0, 180.0]
-#     ax4 = fig.add_subplot(gs[3], projection=vgp_proj)
-#     ax4.add_feature(cfeature.OCEAN, zorder=0, facecolor='lightblue')
-#     ax4.add_feature(cfeature.LAND, zorder=0, facecolor='bisque')
-#     ax4.gridlines(xlocs=lon_grid, ylocs=lat_grid, linewidth=1,
-#                  color='black', linestyle='dotted')
+    lat_grid=[-60.0, -30.0, 0.0, 30.0, 60.0]
+    lon_grid=[-180.0, -150.0, -120.0, -90.0, -60.0, -30.0, 0.0, 30.0, 60.0, 90.0, 120.0, 150.0, 180.0]
+    ax4 = fig.add_subplot(gs[3], projection=vgp_proj)
+    ax4.add_feature(cfeature.OCEAN, zorder=0, facecolor='lightblue')
+    ax4.add_feature(cfeature.LAND, zorder=0, facecolor='bisque')
+    ax4.gridlines(xlocs=lon_grid, ylocs=lat_grid, linewidth=1,
+                 color='black', linestyle='dotted')
 
-#     mode2_flipped = ipmag.do_flip(di_block=vgp_mode2)
+    mode2_flipped = ipmag.do_flip(di_block=vgp_mode2)
 
-#     if len(vgp_mode1)>0:
-#         if vgp_mode1[0][1]>0:
-#             ipmag.plot_vgp(ax4,di_block=vgp_mode1.tolist(), 
-#                            label = "VGPs (normal)", 
-#                            marker='s',color='blue')
-#             ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
-#                            label = "VGPs (reverse)",
-#                            marker='d',color='red')
-#             plt.legend()
-#         else:
-#             ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
-#                            label = "VGPs (normal)", 
-#                            marker='s',color='blue')
-#             ipmag.plot_vgp(ax4,di_block=vgp_mode1.tolist(), 
-#                            label = "VGPs (reverse)",
-#                            marker='d',color='red')
-#     elif len(vgp_mode2)>0:
-#         if vgp_mode2[0][1]>0: 
-#             ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
-#                            label = "VGPs (normal)", 
-#                            marker='s',color='blue')
-#         elif vgp_mode2[0][1]<0:
-#             ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
-#                            label = "VGPs (reverse)",
-#                            marker='d',color='red')
+    if len(vgp_mode1)>0:
+        if vgp_mode1[0][1]>0:
+            ipmag.plot_vgp(ax4,di_block=vgp_mode1.tolist(), 
+                           label = "VGPs (normal)", 
+                           marker='s',color='blue')
+            ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
+                           label = "VGPs (reverse)",
+                           marker='d',color='red')
+            plt.legend()
+        else:
+            ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
+                           label = "VGPs (normal)", 
+                           marker='s',color='blue')
+            ipmag.plot_vgp(ax4,di_block=vgp_mode1.tolist(), 
+                           label = "VGPs (reverse)",
+                           marker='d',color='red')
+    elif len(vgp_mode2)>0:
+        if vgp_mode2[0][1]>0: 
+            ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
+                           label = "VGPs (normal)", 
+                           marker='s',color='blue')
+        elif vgp_mode2[0][1]<0:
+            ipmag.plot_vgp(ax4,di_block=mode2_flipped, 
+                           label = "VGPs (reverse)",
+                           marker='d',color='red')
             
             
             
-#     if (np.isnan(reported_pole['Plon'].values[0]) == False) & (np.isnan(reported_pole['Plat'].values[0]) == False) & (np.isnan(reported_pole['A95'].values[0]) == False):
-#         pole_lat = reported_pole['Plat'].values[0]
-#         pole_lon = reported_pole['Plon'].values[0]
-#         pole_A95 = reported_pole['A95'].values[0]
-#         ipmag.plot_pole(ax4, pole_lon, pole_lat, pole_A95, 
-#                         label="reported pole", color='y')
-#     if not len(vgp_mean) == 0:
-#         ipmag.plot_pole(ax4, vgp_mean['dec'], vgp_mean['inc'], vgp_mean['alpha95'], 
-#                              label="recalculated pole", color='red')
-#     plt.legend(loc='lower center')    
-#     ax4.set_title('virtual geomagnetic poles and mean poles', 
-#                   y=-0.1, backgroundcolor= 'white')
+    if (np.isnan(reported_pole['Plon'].values[0]) == False) & (np.isnan(reported_pole['Plat'].values[0]) == False) & (np.isnan(reported_pole['A95'].values[0]) == False):
+        pole_lat = reported_pole['Plat'].values[0]
+        pole_lon = reported_pole['Plon'].values[0]
+        pole_A95 = reported_pole['A95'].values[0]
+        ipmag.plot_pole(ax4, pole_lon, pole_lat, pole_A95, 
+                        label="reported pole", color='y')
+    if not len(vgp_mean) == 0:
+        ipmag.plot_pole(ax4, vgp_mean['dec'], vgp_mean['inc'], vgp_mean['alpha95'], 
+                             label="recalculated pole", color='red')
+    plt.legend(loc='lower center')    
+    ax4.set_title('virtual geomagnetic poles and mean poles', 
+                  y=-0.1, backgroundcolor= 'white')
 
-#     reversal_test_img_path = pole_folder + '/common_mean_bootstrap.png'
-#     if os.path.exists(reversal_test_img_path):
-#         reversal_test_img = mpimg.imread(reversal_test_img_path)
-#         ax5 = fig.add_subplot(gs[2, :])
-#         ax5.imshow(reversal_test_img)
-#         ax5.axis("off")
+    reversal_test_img_path = pole_folder + '/common_mean_bootstrap.png'
+    if os.path.exists(reversal_test_img_path):
+        reversal_test_img = mpimg.imread(reversal_test_img_path)
+        ax5 = fig.add_subplot(gs[2, :])
+        ax5.imshow(reversal_test_img)
+        ax5.axis("off")
 
-#     QQ_test_img_path =  pole_folder + '/QQ_mode1.png'
-#     if os.path.exists(QQ_test_img_path):
-#         QQ_test_img = mpimg.imread(QQ_test_img_path)
-#         ax6 = fig.add_subplot(gs[3, :])
-#         ax6.imshow(QQ_test_img)
-#         ax6.axis("off")
+    QQ_test_img_path =  pole_folder + '/QQ_mode1.png'
+    if os.path.exists(QQ_test_img_path):
+        QQ_test_img = mpimg.imread(QQ_test_img_path)
+        ax6 = fig.add_subplot(gs[3, :])
+        ax6.imshow(QQ_test_img)
+        ax6.axis("off")
 
-#     plt.tight_layout()
-#     plt.savefig(pole_folder + '/pole_summary.png',dpi=450)
+    plt.tight_layout()
+    plt.savefig(pole_folder + '/pole_summary.png',dpi=450)
 
 
 # def Plot_VgpsAndSites(df, pole, vgp_mean, mode1, mode2):
