@@ -51,7 +51,12 @@ def GCD_cartesian(cartesian1, cartesian2):
     '''
     Computes the great circle distance from the dot product of two vectors in cartesian coordinates 
     '''
-    dot = np.dot(cartesian1, cartesian2)
+    try:
+        dot = np.dot(cartesian1, cartesian2)
+    except :
+        print(f" Inside except block - GCD_cartesian: {cartesian1} {cartesian2}")
+        return np.nan
+    
     if np.isnan(dot).any(): return np.nan
     if abs(dot) > 1: dot = round(dot)
     gcd =  np.arccos(dot)
