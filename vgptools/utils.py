@@ -54,7 +54,7 @@ def GCD_cartesian(cartesian1, cartesian2):
     try:
         dot = np.dot(cartesian1, cartesian2)
     except :
-        print(f" Inside except block - GCD_cartesian: {cartesian1} {cartesian2}")
+        # print(f" Inside except block - GCD_cartesian: {cartesian1} {cartesian2}")
         return np.nan
     
     if np.isnan(dot).any(): return np.nan
