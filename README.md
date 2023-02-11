@@ -15,3 +15,5 @@
 *(6) *
 *(7) Research School of Earth Sciences, Australian National University, Canberra, Australian Capital Territory, Australia.*
 *(8) Institut de Physique du Globe de Paris, Université de Paris, Paris, France.*
+
+Available at: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PolarWandering/Gallo_etal_2023_APWP_construction/HEAD)
