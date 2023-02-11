@@ -58,10 +58,13 @@ def GCD_cartesian(cartesian1, cartesian2):
         return np.nan
     
     if np.isnan(dot).any(): return np.nan
-    if abs(dot) > 1: dot = round(dot)
-    gcd =  np.arccos(dot)
     
+    # Check if the dot product is not between -1 and 1
+    if not (-1 <= dot <= 1):
+        return np.nan
+    gcd =  np.arccos(dot)    
     return gcd
+
 
 def PD(ArrayXYZ):
     '''
