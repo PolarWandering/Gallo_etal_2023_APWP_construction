@@ -2,7 +2,9 @@
     
 # ***Embracing uncertainty to resolve polar wander: a case study of Cenozoic North America***
 
-### ***by L. C. Gallo<sup>1<sup>*** *(len.gallo@gmail.com)****, M. Domeier<sup>1</sup>, F. Sapienza<sup>2</sup>, B. Vaes<sup>3</sup>, N. Swanson-Hysell<sup>4</sup>, M. Arnaould<sup>5</sup>, A. Eyster,  D. Gürer<sup>7</sup>, A. Kiraly<sup>1</sup>, B. Robert<sup>8</sup>, T. Rolf<sup>1</sup>, G. Shephard<sup>1</sup>,  A. van der Boon<sup>1</sup>, L. Wu and Y. Zhang<sup>4</sup>***
+### ***by L. C. Gallo<sup>1<sup>*** *(len.gallo@gmail.com)****, M. Domeier<sup>1</sup>, F. Sapienza<sup>2</sup>***
+
+<!-- B. Vaes<sup>3</sup>, N. Swanson-Hysell<sup>4</sup>, M. Arnaould<sup>5</sup>, A. Eyster,  D. Gürer<sup>7</sup>, A. Kiraly<sup>1</sup>, B. Robert<sup>8</sup>, T. Rolf<sup>1</sup>, G. Shephard<sup>1</sup>,  A. van der Boon<sup>1</sup>, L. Wu and Y. Zhang<sup>4</sup>***-->
 
 
 *(1) Centre for Earth Evolution and Dynamics, University of Oslo, Norway.*
