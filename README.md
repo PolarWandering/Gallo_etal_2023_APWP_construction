@@ -22,7 +22,7 @@ This manuscript is under review at *Geophysical Research Letters*
 
 ## code
 
-This folder contains Jupyter notebooks developed using a Python 3 kernel that generate the figures and conduct data analysis associated with the study. 
+The Jupyter notebooks stored in this folder were created using a Python 3 kernel and are utilized to produce the figures and perform data analysis related to the study.
 
 
 #### 0_Preprocessing.ipynb
@@ -34,7 +34,7 @@ This notebook preprocesses site level data from the VGP database compilation, ch
     
 This notebook iterates through each paleomagnetic record (datasheet) of the vgp database, extracts data meeting user-specified criteria, and appends them to a new dataframe for later processing (to generate an APWP).    
 
-#### MC_uncertainty_propagation.ipynb
+#### 2_MC_uncertainty_propagation.ipynb
     
 This notebook illustrates the implementation of Section 2.2 in the paper.
     
