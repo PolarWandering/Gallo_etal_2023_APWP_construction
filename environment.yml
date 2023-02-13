@@ -1,4 +1,4 @@
-name: GRL_2023
+name: test_grl
 channels:
   - defaults
 dependencies:
@@ -9,4 +9,3 @@ dependencies:
   - openpyxl
   - tqdm
   - kneed
-prefix: /Users/leandrog/opt/anaconda3/envs/GRL_2023
