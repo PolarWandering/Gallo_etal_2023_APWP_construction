@@ -180,4 +180,3 @@ dependencies:
   - pip:
     - future==0.18.3
     - pmagpy==4.2.109
-prefix: /Users/leandrog/opt/anaconda3/envs/GRL_2023
