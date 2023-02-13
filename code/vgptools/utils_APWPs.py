@@ -195,7 +195,7 @@ def MC_error_prop_ensemble_results(df_vgps_original, n_sims = 100,
     
     running_means_global = pd.DataFrame(columns=['run','N','k','A95','csd','foliation','lineation','collinearity','coplanarity'])
     
-    for i in range(n_bst):
+    for i in range(n_sims):
     
         # Generate a pseudo-sample of the original dataset in which every entry is a pseudo-sample taken for the error PDF
         pseudo_df = get_vgps_sampling_from_direction(df_vgps_original, study_label= study_label,
