@@ -1,4 +1,4 @@
-name: test_grl
+name: 2023_GRL
 channels:
   - defaults
 dependencies:
