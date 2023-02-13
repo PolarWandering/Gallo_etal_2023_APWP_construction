@@ -179,4 +179,4 @@ dependencies:
   - zstd=1.5.2=hcb37349_0
   - pip:
     - future==0.18.3
-    - pmagpy==4.2.109
+    - pmagpy==4.2.109 
