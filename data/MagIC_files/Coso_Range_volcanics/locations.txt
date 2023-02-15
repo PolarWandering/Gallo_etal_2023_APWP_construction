@@ -1,0 +1,4 @@
+tab 	locations
+age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
+1.07	1.31	0.8300000000000001	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	35.9859433564612	35.9029698869511	Basalt	Coso Range volcanics	Outcrop	-117.664527627671	-117.893496569538	North American Plate	66.82231496596893	16.165811097839374	-73.77595738589856	249.3026522763038	2.0	Coso Range volcanics pole	32:33
+1.07	1.0	0.79	Ma		Igneous:Extrusive	36.0504507617625	35.9	Basalt:Rhyolite	Coso Range volcanics	Outcrop	-117.3	-117.893496569538	North American Plate							58:35:32:33

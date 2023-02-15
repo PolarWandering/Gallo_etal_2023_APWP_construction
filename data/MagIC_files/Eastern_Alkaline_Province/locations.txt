@@ -1,0 +1,4 @@
+tab 	locations
+age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
+8.235	14.97	1.5	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	21.324	19.62	Basalt	Eastern Alkaline Province	Outcrop	-96.415	-98.61	North American Plate	5.536743496504044	42.47958785880613	-88.340152811511	267.7112481503849	17.0	Eastern Alkaline Province pole	VE18:VE19:VE10:VE13:VE12:VE11:VE16:VE17:VE05:VE03:VE02:VE04:VE07:VE01:VE06:VE15:VE08
+8.235	14.33	1.5	Ma		Igneous:Extrusive	21.324	19.62	Basalt	Eastern Alkaline Province	Outcrop	-96.415	-98.61	North American Plate							VE18:VE19:VE10:VE13:VE12:VE09:VE11:VE14:VE16:VE17:VE05:VE03:VE02:VE04:VE07:VE01:VE06:VE15:VE08

@@ -1,0 +1,4 @@
+tab 	locations
+age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
+40.42	46.7	34.14	Ma	{'uncer_dist': 'uniform'}	Sedimentary:Igneous:Intrusive	29.118	28.987	Gabbro:Sandstone	Mariscal Mtn intrusions	Outcrop	-103.171	-103.201	North American Plate	5.366825069979672	42.4604732293431	-79.96924221852674	5.260913974161101	18.0	Mariscal Mtn intrusions pole	mm8:mm9:mm10:mm12:mm13:mm18:mm20:mm21:mm23:mm24:mm25:mm26:mm30:mm31:mm37:mm39:mm42a:mm44
+40.42	34.14	34.14	Ma		Sedimentary:Igneous:Intrusive	29.118	28.987	Gabbro:Sandstone	Mariscal Mtn intrusions	Outcrop	-103.171	-103.201	North American Plate							mm8:mm9:mm10:mm12:mm13:mm18:mm19*:mm20:mm21:mm22*:mm23:mm24:mm25:mm26:mm30:mm31:mm37:mm39:mm42a:mm42b*:mm44

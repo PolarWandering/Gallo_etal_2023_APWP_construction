@@ -1,0 +1,4 @@
+tab 	locations
+age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
+0.7635	1.448	0.07900000000000001	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	20.91333	20.685	Rhyolite:Basalt:Andesite:Basaltic Andesite:Dacite	Tequila volcanic field	Outcrop	-103.008	-104.043	North American Plate	6.925343320983027	27.503550638407148	-85.4219176577252	263.87237013650224	17.0	Tequila volcanic field pole	TL1:TL5:TM3:TM2:TM1:TM6:TM11:TL2:TM5:TM8:TL3:TL12:TL4:TL7:TL11:TM4:TM7
+0.7635	0.823	0.07900000000000001	Ma		Igneous:Extrusive	20.91333	20.685	Rhyolite:Basalt:Andesite:Basaltic Andesite:Dacite	Tequila volcanic field	Outcrop	-103.008	-104.043	North American Plate							TL1:TL5:TM3:TM2:TM1:TM6:TM11:TM10:TM9:TL2:TL9:TM5:TM8:TL3:TL12:TL4:TL10:TL7:TL11:TM4:TM7

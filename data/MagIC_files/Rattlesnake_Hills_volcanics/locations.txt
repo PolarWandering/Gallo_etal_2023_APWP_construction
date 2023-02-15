@@ -1,0 +1,4 @@
+tab 	locations
+age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
+44.900000000000006	45.1	44.7	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	43.2754926423929	42.46812527116	Latite:Rhyolite:Vogesite:Phonolite	Rattlesnake Hills volcanics	Outcrop	-105.494522953108	-108.962512942946	North American Plate	9.634616930706471	13.847358911017805	-79.41531700736061	326.0757250684698	18.0	Rattlesnake Hills volcanics pole	A:B:C:D:E:G:H:I:J:L:M:N:P:Q:R:S:T:U
+44.900000000000006	44.7	44.7	Ma		Igneous:Extrusive	44.6012634372768	42.46812527116	Rhyolite:Latite:Trachyte:Phonolite:Vogesite	Rattlesnake Hills volcanics	Outcrop	-105.494522953108	-108.962512942946	North American Plate							A:B:C:D:E:F*:G:H:I:J:K*:L:M:N:O*:P:Q:R:S:T:U:V*

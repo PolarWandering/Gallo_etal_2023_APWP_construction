@@ -1,0 +1,4 @@
+tab 	locations
+age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
+0.767	0.7679	0.7661	Ma	{'uncer_dist': 'normal'}	Igneous:Extrusive	37.67	37.67	Rhyolite	Bishop tuff	Outcrop	241.25	241.25	North American Plate	1.9	127.0	-80.1641158694752	314.2902519137969	47.0	Bishop tuff pole	Bishop Tuff mean
+0.767	0.7661	0.7661	Ma		Igneous:Extrusive	37.67	37.67	Rhyolite	Bishop tuff	Outcrop	241.25	241.25	North American Plate							B1:B2:B3:B4:B5:B6:B7:B8:B9:B10:B11:B12:B13:B14:B15:B16:B17:B18:B19:B20:B21:B23:B24:B25 (0 m):B25 (3 m):B25 (6 m):B25 (9 m):B25 (12 m):B25 (15 m):B25 (18 m):B25 (21 m):B25 (24 m):B25 (27 m):B25 (30 m):B25 (33 m):B26:B27:C001:C041:C051:C071:C615:C621:C530:C538:Xen:LT:Bishop Tuff mean
