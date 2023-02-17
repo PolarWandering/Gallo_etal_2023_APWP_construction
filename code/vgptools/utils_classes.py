@@ -10,7 +10,7 @@ class quantiles:
     '''
     
     def __init__(self, df, xlabel, ylabel):        
-        self.X = df[xlabel].unique().transpose()        
+        self.X = np.sort(df[xlabel].unique().transpose())        
         self.Y = df.groupby(xlabel)[ylabel]
         
         self.q5 = self.Y.quantile(.05).to_numpy()
@@ -29,7 +29,7 @@ class PC:
     '''
     def __init__(self, df, xlabel, LatLabel, LonLabel):
         
-        self.X = df[xlabel].unique().transpose()
+        self.X = np.sort(df[xlabel].unique().transpose())
         self.df=df
         self.xlabel=xlabel
         self.LatLabel=LatLabel
@@ -82,7 +82,6 @@ class PC:
             lons = df_age[self.LonLabel].values
             array = np.column_stack([lats, lons, gcds])  
             array_masked = array[array[:,2] <= np.percentile(array[:,2], quantile) , :] # discards quantile% of the most distanct veectors to the mean
-
             
             max_lat.append(array_masked[:,0].max())
             min_lat.append(array_masked[:,0].min())
