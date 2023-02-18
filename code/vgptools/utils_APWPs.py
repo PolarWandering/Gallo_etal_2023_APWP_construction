@@ -11,8 +11,7 @@ from shapely.geometry import Polygon
 
 from vgptools.utils import spherical2cartesian, shape, eigen_decomposition, cartesian2spherical, GCD_cartesian, get_angle, PD
 
-
-def moving_average_APWP(data, plon_label = 'plon', plat_label='plat', age_label = 'age',window_length=20, time_step=1, max_age=65, min_age=0):
+def running_mean_APWP_shape(data, plon_label = 'plon', plat_label='plat', age_label = 'age',window_length=20, time_step=1, max_age=65, min_age=0):
     """
     Returns a data frame with a running mean (Moving average) APWP..
     
@@ -51,7 +50,7 @@ def moving_average_APWP(data, plon_label = 'plon', plat_label='plat', age_label 
         effective_age_mean = poles[age_label].to_numpy().mean() #
         effective_age_sd = poles[age_label].to_numpy().std()
         distance2age = np.round(np.random.normal(effective_age_mean, effective_age_sd) - age)
-        
+        effective_age_mean = np.round(effective_age_mean)
         effective_age_median = np.round(np.median(poles[age_label].to_numpy()))
         
         ArrayXYZ = np.array([spherical2cartesian([np.radians(i[plat_label]), np.radians(i[plon_label])]) for _,i in poles.iterrows()])        
