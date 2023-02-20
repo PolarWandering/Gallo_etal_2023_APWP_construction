@@ -1,4 +1,4 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-50.95	55.5	46.4	Ma	{'uncer_dist': 'uniform'}	Igneous:Intrusive	46.7	46.1	Rhyolite	Bitterroot Dome intrusions	Outcrop	245.4	244.8	North American Plate	7.933789503969509	34.08268553827469	-72.17864705801641	344.43296839586606	11.0	Bitterroot Dome intrusions pole	B01:B02:B03:B05:B06:B09:B10:B11:B12:B15:B18
+50.95	55.5	46.4	Ma	{'uncer_dist': 'uniform', 'pole_calculation': 'pole recalculated from site VGP data'}	Igneous:Intrusive	46.7	46.1	Rhyolite	Bitterroot Dome intrusions	Outcrop	245.4	244.8	North American Plate	7.9	34.08	-72.2	344.4	11.0	Bitterroot Dome intrusions pole	B01:B02:B03:B05:B06:B09:B10:B11:B12:B15:B18
 50.95	46.4	46.4	Ma		Igneous:Intrusive	46.7	45.8	Rhyolite	Bitterroot Dome intrusions	Outcrop	246.3	244.8	North American Plate							B01:B02:B03:B05:B06:B09:B09a:B09b:B10:B11:B11a:B11b:B12:B12a:B12b:B15:B15a:B15b:B18:S03:S04:S07:S10:S12:S13:S16:S17

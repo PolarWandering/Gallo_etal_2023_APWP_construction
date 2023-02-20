@@ -1,4 +1,4 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-2.255	4.51	0.0	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	22.82	18.976	Andesite	Central Mexico Plio-Pleistocene	Outcrop	-99.25	-101.914	North American Plate	5.34724209409093	61.071911302403514	-88.50309471229357	154.99689379593187	13.0	Central Mexico Plio-Pleistocene pole	6:8:9:10:11:12:13:14:15:17:18:19:20
+2.255	4.51	0.0	Ma	{'uncer_dist': 'uniform', 'pole_calculation': 'pole recalculated from site VGP data'}	Igneous:Extrusive	22.82	18.976	Andesite	Central Mexico Plio-Pleistocene	Outcrop	-99.25	-101.914	North American Plate	5.3	61.07	-88.5	155.0	13.0	Central Mexico Plio-Pleistocene pole	6:8:9:10:11:12:13:14:15:17:18:19:20
 2.665	3.7699999999999996	0.0	Ma		Igneous:Extrusive	22.837	18.976	Andesite	Central Mexico Plio-Pleistocene	Outcrop	-99.25	-101.914	North American Plate							2:3:4:6:8:9:10:11:12:13:14:15:17:18:19:20

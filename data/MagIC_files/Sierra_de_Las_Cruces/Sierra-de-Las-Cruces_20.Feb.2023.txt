@@ -1,6 +1,6 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-2.055	4.11	0.0	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	19.57	19.29	Basalt:Andesite	Sierra de Las Cruces	Outcrop	260.68	260.40999999999997	North American Plate	4.689496019896829	39.08545703025538	-80.83812820377308	336.59299031236384	25	Sierra de Las Cruces pole	JQ1:JQ2:JQ3:JQ4:AJ1:AJ2:IT:IT2:ST2:JI1:ST3:PL:ST4:ST5:ST1:AY:CH1:CH2:CH3:GU3:PC2:TO1:TO3:TO2:TO4
+2.055	4.11	0.0	Ma	{'uncer_dist': 'uniform', 'pole_calculation': 'pole recalculated from site VGP data'}	Igneous:Extrusive	19.57	19.29	Basalt:Andesite	Sierra de Las Cruces	Outcrop	260.68	260.40999999999997	North American Plate	4.7	39.09	-80.8	336.6	25	Sierra de Las Cruces pole	JQ1:JQ2:JQ3:JQ4:AJ1:AJ2:IT:IT2:ST2:JI1:ST3:PL:ST4:ST5:ST1:AY:CH1:CH2:CH3:GU3:PC2:TO1:TO3:TO2:TO4
 2.055	3.31	0.0	Ma		Igneous:Extrusive	19.573	19.29	Basalt:Andesite	Sierra de Las Cruces	Outcrop	260.68	260.40999999999997	North American Plate							JQ1:JQ2:JQ3:JQ4:CM1*:AJ1:AJ2:IT:IT2:ST2:JI1:ST3:CR**:CR2**:PL:MT*:MT2**:ST4:ST5:ST1:AY:CH1:CH2:CH3:GU3:PC2:TO1:TO3:TO2:TO4
 >>>>>>>>>>
 tab 	sites

@@ -1,6 +1,6 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-3.014	6.0	0.0279999999999999	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	44.15663	42.45559	Basalt	Snake River Plain	Outcrop	248.57442	244.92279	North American Plate	6.171164228401165	25.035632612473652	-86.87422867582265	187.76949629116748	23	Snake River Plain pole	sr01:sr03:sr04:sr09:sr11:sr12:sr16:sr19:sr21:sr22:sr23:sr24:sr25:sr26:sr28:sr29:sr30:sr31:sr34:sr36:sr37:sr39:sr40
+3.014	6.0	0.0279999999999999	Ma	{'uncer_dist': 'uniform', 'pole_calculation': 'pole recalculated from site VGP data'}	Igneous:Extrusive	44.15663	42.45559	Basalt	Snake River Plain	Outcrop	248.57442	244.92279	North American Plate	6.2	25.04	-86.9	187.8	23	Snake River Plain pole	sr01:sr03:sr04:sr09:sr11:sr12:sr16:sr19:sr21:sr22:sr23:sr24:sr25:sr26:sr28:sr29:sr30:sr31:sr34:sr36:sr37:sr39:sr40
 3.014	5.5	0.0279999999999999	Ma		Igneous:Extrusive	44.18629	42.45559	Basalt	Snake River Plain	Outcrop	248.67201	244.92279	North American Plate							sr01:sr03:sr04:sr09:sr11:sr12:sr16:sr19:sr20:sr21:sr22:sr23:sr24:sr25:sr26:sr27:sr28:sr29:sr30:sr31:sr34:sr36:sr37:sr39:sr40:sr42
 >>>>>>>>>>
 tab 	sites

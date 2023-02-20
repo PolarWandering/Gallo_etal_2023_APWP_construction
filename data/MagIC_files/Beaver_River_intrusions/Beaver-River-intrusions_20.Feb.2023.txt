@@ -1,6 +1,6 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-42.0	43.5	40.5	Ma	{'uncer_dist': 'normal'}	Igneous:Intrusive	60.3	60.2	Syenite	Beaver River intrusions	Outcrop	234.8	234.5	North American Plate	4.79231159482962	44.97275626267796	-79.31324219108687	327.6698411828201	21	Beaver River intrusions pole	01 LCE:02 LCE:03 LCE:04 LCE:05 LCE:06 LCE:07 LCE:08 LCE:10 LCW:11 LCW:12 LCW:14 LCW:16 LCW:18 BR:19 BR:20 BR:21 BR:22 BR:23 BR:24 BR:26 BR
+42.0	43.5	40.5	Ma	{'uncer_dist': 'normal', 'pole_calculation': 'pole recalculated from site VGP data'}	Igneous:Intrusive	60.3	60.2	Syenite	Beaver River intrusions	Outcrop	234.8	234.5	North American Plate	4.8	44.97	-79.3	327.7	21	Beaver River intrusions pole	01 LCE:02 LCE:03 LCE:04 LCE:05 LCE:06 LCE:07 LCE:08 LCE:10 LCW:11 LCW:12 LCW:14 LCW:16 LCW:18 BR:19 BR:20 BR:21 BR:22 BR:23 BR:24 BR:26 BR
 42.0	41.8	40.5	Ma		Igneous:Intrusive	60.3	60.2	Syenite	Beaver River intrusions	Outcrop	234.8	234.5	North American Plate							01 LCE:02 LCE:03 LCE:04 LCE:05 LCE:06 LCE:07 LCE:08 LCE:09 LCW*:10 LCW:11 LCW:12 LCW:13 LCW*:14 LCW:16 LCW:17 LCW*:18 BR:19 BR:20 BR:21 BR:22 BR:23 BR:24 BR:25 BR*:26 BR
 >>>>>>>>>>
 tab 	sites

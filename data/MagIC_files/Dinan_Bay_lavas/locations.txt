@@ -1,4 +1,4 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-22.65	26.4	18.9	Ma	{'uncer_dist': 'uniform'}	Igneous:Extrusive	53.6722586348384	53.6376229271893	Basalt	Dinan Bay lavas	Outcrop	-126.656089183881	-126.697544799636	North American Plate	9.832138367475117	18.744472424483686	-83.33583869950067	324.2735640172362	13.0	Dinan Bay lavas pole	46:47:48:49:51:52:53:54:55:56:57:58:59
+22.65	26.4	18.9	Ma	{'uncer_dist': 'uniform', 'pole_calculation': 'pole recalculated from site VGP data'}	Igneous:Extrusive	53.6722586348384	53.6376229271893	Basalt	Dinan Bay lavas	Outcrop	-126.656089183881	-126.697544799636	North American Plate	9.8	18.74	-83.3	324.3	13.0	Dinan Bay lavas pole	46:47:48:49:51:52:53:54:55:56:57:58:59
 22.65	18.9	18.9	Ma		Igneous:Extrusive	53.6722586348384	53.6376229271893	Basalt	Dinan Bay lavas	Outcrop	-126.656089183881	-126.697544799636	North American Plate							46:47:48:49:51:52:53:54:55:56:57:58:59
