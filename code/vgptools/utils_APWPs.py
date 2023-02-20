@@ -39,18 +39,21 @@ def running_mean_APWP_shape(data, plon_label = 'plon', plat_label='plat', age_la
     for age in mean_pole_ages:
         window_min = age - (window_length / 2.)
         window_max = age + (window_length / 2.)
-        poles = data.loc[(data[age_label] >= window_min) & (data[age_label] <= window_max)]
-        # poles = data.query('{} >= {} & {} <= {}'.format(age_label, window_min, age_label, window_max))   
+        poles_ = data.loc[(data[age_label] >= window_min) & (data[age_label] <= window_max)]
+        
+        # weights = [(1-0.1)*(1-(np.abs( row.age - age ) / ((max_age - min_age) / 2)))+0.1 for i, row in poles.iterrows()]
+        weights = [(1-(np.abs( row.age - age ) / ((window_max - window_min) / 2))) for i, row in poles_.iterrows()]
+        poles = poles_.sample(n = len(poles_), weights = weights, replace = True)
         
         if poles.empty: continue
         
         number_studies = len(poles['Study'].unique())
         mean = ipmag.fisher_mean(dec=poles[plon_label].tolist(), inc=poles[plat_label].tolist())
         
-        effective_age_mean = poles[age_label].to_numpy().mean() #
+        effective_age_mean = np.round(poles[age_label].to_numpy().mean()) #
         effective_age_sd = poles[age_label].to_numpy().std()
         distance2age = np.round(np.random.normal(effective_age_mean, effective_age_sd) - age)
-        effective_age_mean = np.round(effective_age_mean)
+        
         effective_age_median = np.round(np.median(poles[age_label].to_numpy()))
         
         ArrayXYZ = np.array([spherical2cartesian([np.radians(i[plat_label]), np.radians(i[plon_label])]) for _,i in poles.iterrows()])        
@@ -91,6 +94,7 @@ def running_mean_APWP_shape(data, plon_label = 'plon', plat_label='plat', age_la
     running_means['plon'] = np.where(running_means['age']==0, 0, running_means['plon'])
     
     return running_means
+
 
 
 def get_pseudo_vgps(df):  
