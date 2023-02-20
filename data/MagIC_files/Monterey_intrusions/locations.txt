@@ -1,5 +1,5 @@
 tab 	locations
 age	age_high	age_low	age_unit	description	geologic_classes	lat_n	lat_s	lithologies	location	location_type	lon_e	lon_w	plate_blocks	pole_alpha95	pole_k	pole_lat	pole_lon	pole_n_sites	result_name	sites
-47.45	47.9	47.0	Ma	{'uncer_dist': 'uniform'}	Igneous:Intrusive	38.475	38.14655	Basalt:Felsite	Monterey intrusions	Outcrop	281.1221522813717	280.3	North American Plate	12.024477484133866	31.99844928065842	-87.63548312107784	226.1931420079409	6.0	Monterey intrusions pole 1	1:2:3:6:7:8
+47.45	47.9	47.0	Ma	{'uncer_dist': 'uniform'}	Igneous:Intrusive	38.475	38.14655	Felsite:Basalt	Monterey intrusions	Outcrop	281.1221522813717	280.3	North American Plate	12.024477484133866	31.99844928065842	-87.63548312107784	226.1931420079409	6.0	Monterey intrusions pole 1	1:2:3:6:7:8
 47.45	47.9	47.0	Ma	{'uncer_dist': 'uniform'}	Igneous:Intrusive	38.475	38.14655	Basalt	Monterey intrusions	Outcrop	281.1221522813717	280.3	North American Plate	12.176634694243415	15.022778469141224	-83.86949620539151	78.70310949966583	11.0	Monterey intrusions pole 2	1:2:3:4:5:6:7:8:9:10:11
-47.45	47.0	47.0	Ma		Igneous:Intrusive	38.475	38.14655	Basalt:Felsite	Monterey intrusions	Outcrop	281.1221522813717	280.3	North American Plate							1:2:3:6:7:8:1:2:3:4:5:6:7:8:9:10:11
+47.45	47.0	47.0	Ma		Igneous:Intrusive	38.475	38.14655	Felsite:Basalt	Monterey intrusions	Outcrop	281.1221522813717	280.3	North American Plate							1:2:3:6:7:8:1:2:3:4:5:6:7:8:9:10:11
