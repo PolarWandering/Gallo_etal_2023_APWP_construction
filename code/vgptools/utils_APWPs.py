@@ -11,6 +11,9 @@ from shapely.geometry import Polygon
 
 from vgptools.utils import spherical2cartesian, shape, eigen_decomposition, cartesian2spherical, GCD_cartesian, get_angle, PD
 
+
+
+
 def running_mean_APWP_shape(data, plon_label = 'plon', plat_label='plat', age_label = 'age',window_length=20, time_step=1, max_age=65, min_age=0):
     """
     Returns a data frame with a running mean (Moving average) APWP..
@@ -96,7 +99,6 @@ def running_mean_APWP_shape(data, plon_label = 'plon', plat_label='plat', age_la
     return running_means
 
 
-
 def get_pseudo_vgps(df):  
     '''
     takes a DF with paleomagnetic poles and respective statistics, it draws N randomly generated VGPs
@@ -163,17 +165,22 @@ def get_vgps_sampling_from_direction(df, study_label= 'Study',
     
     k_mean = df[k_label].mean() # if site-level data has no reported kappa, we take the mean of the population instead.
     
-    df_pseudo = df.sample(frac = 1, replace = True) # generates a bootstrapped sample of the dataframe by randomly sampling with replacement
+    # df_pseudo = df.sample(frac = 1, replace = True) # generates a bootstrapped sample of the dataframe by randomly sampling with replacement
     
-    for index, row in df_pseudo.iterrows():        
+    for index, row in df.iterrows():        
         
         # we first generate one random direction from the original entry.
         kappa = k_mean if np.isnan(row[k_label]) else row[k_label] # if we don't have kappa, we take the mean of the reported ones       
+        n = 3 if np.isnan(row.n) else int(row.n)
         
-        directions_temp = ipmag.fishrot(k = kappa, n = 1, dec = row[dec_label], inc = row[inc_label], di_block = False)
+        # directions_temp = ipmag.fishrot(k = kappa, n = 1, dec = row[dec_label], inc = row[inc_label], di_block = False)
+        directions_temp = ipmag.fishrot(k = kappa, n = n, dec = row[dec_label], inc = row[inc_label], di_block = False)        
+        site_mean = ipmag.fisher_mean(dec = directions_temp[0], inc = directions_temp[1])        
         
-        decs.append(directions_temp[0][0])
-        incs.append(directions_temp[1][0])
+        decs.append(site_mean['dec'])
+        incs.append(site_mean['inc'])        
+        # decs.append(directions_temp[0][0])
+        # incs.append(directions_temp[1][0])
         slat.append(row[slat_label])
         slon.append(row[slon_label])
         indexes.append(index)
