@@ -12,5 +12,5 @@ dependencies:
   - tqdm=4.64
   - kneed=0.7
   - pip:
-    - future=0.18
-    - pmagpy=4.2.106
+    - future==0.18
+    - pmagpy==4.2.106
