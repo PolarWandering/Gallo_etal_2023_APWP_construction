@@ -3,7 +3,8 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - pandas=1.5
+  - python=3.9
+  - pandas=1.4
   - cartopy=0.21
 #  - jupyterlab=3.5
   - seaborn=0.12
