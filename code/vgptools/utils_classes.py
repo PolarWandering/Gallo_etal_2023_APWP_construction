@@ -57,7 +57,7 @@ class PC:
             lats.append(np.degrees(cartesian2spherical(PrinComp))[0])
             lons.append(np.degrees(cartesian2spherical(PrinComp))[1])
                        
-        lats[0]=-90 # set the present day field in -90
+        if 0 in self.X: lats[0]=-90 # set the present day field in -90
         
         return [np.array(lons),np.array(lats),np.array(maxGCD95)]
     
