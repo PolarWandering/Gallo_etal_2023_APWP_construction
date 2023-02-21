@@ -11,3 +11,5 @@ dependencies:
   - openpyxl=3.0
   - tqdm=4.64
   - kneed=0.7
+  - pip:
+    - pmagpy==4.2
