@@ -6,11 +6,10 @@ dependencies:
   - python=3.9
   - pandas=1.4
   - cartopy=0.21
-#  - jupyterlab=3.5
   - seaborn=0.12
   - openpyxl=3.0
   - tqdm=4.64
   - kneed=0.7
   - pip:
     - future==0.18
-    - pmagpy==4.2.106
+    - pmagpy==4.2.109
