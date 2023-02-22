@@ -37,12 +37,11 @@ This notebook iterates through each paleomagnetic record (datasheet) of the vgp 
 #### 2_MC_uncertainty_propagation.ipynb
     
 This notebook illustrates the implementation of Section 2.2 in the paper.
-    
 
 #### 3_Comparisons.ipynb
-    
-    
+
+This notebook compares APWPs resulting from moving averages on paleopoles (e.g. Torsvik et al., 2012), moving averages on simulated VGPs (Vaes et al., 2022), and moving averages with a weighted window on the actual VGPs (this study). Plot the results in Figure 4 of the paper.
 
 #### Window_width_Optimization.ipynb    
 
-In this following Notebook we find the optimal averaging window size, that is, an optimal balance between overfitting and underfitting of the Moving averages. We achieve this through a modified version of the leasts squares cross-validation technique
+In this Notebook we find the optimal averaging window size, that is, an optimal balance between overfitting and underfitting of the Moving averages. We achieve this through a modified version of the leasts squares cross-validation technique
