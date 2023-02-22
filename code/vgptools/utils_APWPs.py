@@ -14,7 +14,93 @@ from vgptools.utils import spherical2cartesian, shape, eigen_decomposition, cart
 
 
 
-def running_mean_APWP_shape(data, plon_label = 'plon', plat_label='plat', age_label = 'age',window_length=20, time_step=1, max_age=65, min_age=0):
+def running_mean_APWP(data, plon_label = 'plon', plat_label='plat', age_label = 'age',
+                                 window_length=20, time_step=1, max_age=65, min_age=0):
+    """
+    Returns a data frame with a running mean (Moving average) APWP..
+    
+    Parameters: 
+    - Data Frame with the folowing columns that need to be set [['vgp_lat'],['vgp_lon'],['age']]
+    - time-step of the moving average (in Ma)
+    - window size of the moving average (in Ma)
+    
+    * it also calculates descriptive parameters for the underlying distribution of VGPs within each window, e.g. : 
+    - Number of VGPs,
+    - Angular dispersion
+    - Concentration
+    - Shape (expressed as foliation, lineation, coplanarity and collinearity)
+     
+    * the APWP can also be described with some parameters, e.g.:
+    - Apparent Polar wander rate (in degrees per Ma) between each time interval
+
+    """
+    
+    mean_pole_ages = np.arange(min_age, max_age + time_step, time_step)
+    
+    running_means = pd.DataFrame(columns=['age','N','n_studies','k','A95','csd','plon','plat', 'foliation','lineation','collinearity','coplanarity','elong_dir',
+                                         'effective_age','effective_age_std','effective_age_median','distance2age'])
+    
+    for age in mean_pole_ages:
+        window_min = age - (window_length / 2.)
+        window_max = age + (window_length / 2.)
+        poles = data.loc[(data[age_label] >= window_min) & (data[age_label] <= window_max)]
+        
+        if poles.empty: continue
+        
+        number_studies = len(poles['Study'].unique())
+        mean = ipmag.fisher_mean(dec=poles[plon_label].tolist(), inc=poles[plat_label].tolist())
+        
+        effective_age_mean = np.round(poles[age_label].to_numpy().mean()) #
+        effective_age_sd = poles[age_label].to_numpy().std()
+        distance2age = np.round(np.random.normal(effective_age_mean, effective_age_sd) - age)
+        
+        effective_age_median = np.round(np.median(poles[age_label].to_numpy()))
+        
+        ArrayXYZ = np.array([spherical2cartesian([np.radians(i[plat_label]), np.radians(i[plon_label])]) for _,i in poles.iterrows()])        
+        if len(ArrayXYZ) > 3:
+            shapes = shape(ArrayXYZ)
+            PrinComp=PD(ArrayXYZ)
+            eVal, eVec = eigen_decomposition(ArrayXYZ)
+            elong_dir = np.degrees(cartesian2spherical(eVec[:,1]))[1] # from T&K2004 (declination od the intermediate Evec)
+            # mean['inc']=np.degrees(cartesian2spherical(PrinComp))[0]
+            # mean['dec']=np.degrees(cartesian2spherical(PrinComp))[1]
+        else:
+            shapes = [np.nan,np.nan,np.nan,np.nan]
+        
+        if len(poles)>2: #ensures that dict isn't empty
+            running_means.loc[age] = [age, mean['n'], number_studies, mean['k'],mean['alpha95'], mean['csd'], mean['dec'], mean['inc'], 
+                                      shapes[0], shapes[1], shapes[2], shapes[3], elong_dir,
+                                     effective_age_mean, effective_age_sd, effective_age_median, distance2age]
+    # Set longitudes in [-180, 180]
+    running_means['plon'] = running_means.apply(lambda row: row.plon - 360 if row.plon > 180 else row.plon, axis =1)   
+    
+    # The following block calculates rate of polar wander (degrees per million years) 
+    running_means['PPcartesian'] = running_means.apply(lambda row: spherical2cartesian([np.radians(row['plat']),np.radians(row['plon'])]), axis = 1)
+    running_means['PP_prev'] = running_means['PPcartesian'].shift(periods = 1)
+    running_means['PP_next'] =  running_means['PPcartesian'].shift(periods = -1)
+    running_means['GCD'] = running_means.apply(lambda row: np.degrees(GCD_cartesian(row['PP_prev'], row['PPcartesian'])), axis = 1)
+    running_means['APW_rate'] = running_means['GCD']/running_means['age'].diff()
+
+    running_means['APW_rate_eff_age'] = running_means['GCD']/running_means['effective_age'].diff().replace(0, np.nan, inplace=False)
+    
+    # Calculate a 'kink' angle for each position of the path
+    running_means['angle'] = running_means.apply(lambda row: get_angle(row['PP_prev'], row['PPcartesian'], row['PP_next']), axis = 1)
+
+    running_means = running_means.drop(['PPcartesian', 'PP_prev', 'PP_next'], axis=1)      
+    running_means.reset_index(drop=1, inplace=True)
+    
+    #set the present day field for the present
+    running_means['plat'] = np.where(running_means['age']==0, -90, running_means['plat'])
+    running_means['plon'] = np.where(running_means['age']==0, 0, running_means['plon'])
+    
+    return running_means
+
+
+
+
+
+def weighted_moving_average_APWP(data, plon_label = 'plon', plat_label='plat', age_label = 'age',
+                                 window_length=20, time_step=1, max_age=65, min_age=0):
     """
     Returns a data frame with a running mean (Moving average) APWP..
     
@@ -227,7 +313,7 @@ def MC_error_prop_ensemble_results(df_vgps_original, n_sims = 100,
                                    window_length=20, time_step=1, max_age=65, min_age=0):
     
     '''
-    This function does everyting 
+    This function gets the pooled directions and return the ensemble Moving Averages following the workflow of Gallo et al. (2023) 
     '''
     
     running_means_global = pd.DataFrame(columns=['run','N','k','A95','csd','foliation','lineation','collinearity','coplanarity'])
@@ -241,7 +327,7 @@ def MC_error_prop_ensemble_results(df_vgps_original, n_sims = 100,
                                              mean_age_lab=mean_age_lab, min_age_lab=min_age_lab, max_age_lab=max_age_lab)
 
         # Construct a Moving Average on the former data-set
-        RM = running_mean_APWP_shape(pseudo_df, plon_label = 'plon', plat_label='plat', age_label = 'age', 
+        RM = weighted_moving_average_APWP(pseudo_df, plon_label = 'plon', plat_label='plat', age_label = 'age', 
                             window_length=window_length, time_step=time_step, max_age=max_age, min_age=min_age)
  
         RM['run'] = float(i)
