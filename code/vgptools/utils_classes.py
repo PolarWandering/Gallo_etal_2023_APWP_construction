@@ -53,9 +53,14 @@ class PC:
             # calculate the distance from each direction to the principal component 
             gcds = [GCD_cartesian(array[i],PrinComp) for i,_ in enumerate(array)]
             
-            maxGCD95.append(np.degrees(np.percentile(gcds, quantile)))
-            lats.append(np.degrees(cartesian2spherical(PrinComp))[0])
-            lons.append(np.degrees(cartesian2spherical(PrinComp))[1])
+            try:
+                maxGCD95.append(np.degrees(np.percentile(gcds, quantile)))
+                lats.append(np.degrees(cartesian2spherical(PrinComp))[0])
+                lons.append(np.degrees(cartesian2spherical(PrinComp))[1])
+            except:
+                maxGCD95.append(np.nan)
+                lats.append(np.nan)
+                lons.append(np.nan)
                        
         if 0 in self.X: lats[0]=-90 # set the present day field in -90
         
@@ -82,10 +87,15 @@ class PC:
             lons = df_age[self.LonLabel].values
             array = np.column_stack([lats, lons, gcds])  
             array_masked = array[array[:,2] <= np.percentile(array[:,2], quantile) , :] # discards quantile% of the most distanct veectors to the mean
-            
-            max_lat.append(array_masked[:,0].max())
-            min_lat.append(array_masked[:,0].min())
-            max_lon.append(array_masked[:,1].max())
-            min_lon.append(array_masked[:,1].min())
+            try:
+                max_lat.append(array_masked[:,0].max())
+                min_lat.append(array_masked[:,0].min())
+                max_lon.append(array_masked[:,1].max())
+                min_lon.append(array_masked[:,1].min())
+            except:
+                max_lat.append(np.nan)
+                min_lat.append(np.nan)
+                max_lon.append(np.nan)
+                min_lon.append(np.nan)
             
         return [np.array(max_lon), np.array(min_lon), np.array(max_lat), np.array(min_lat)]    
