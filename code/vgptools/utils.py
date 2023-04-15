@@ -347,9 +347,9 @@ def summary_figure(dataframe, vgp_mode1, vgp_mode2,
     vgp_proj = ccrs.Orthographic(
             central_longitude=0, central_latitude=90)
 
-    gs = GridSpec(4, 2, 
+    gs = GridSpec(5, 2, 
                   width_ratios=[1, 1], 
-                  height_ratios=[1, 1, 0.8, 1.1])
+                  height_ratios=[1, 1, 0.8, 1.1,0.8])
 
     ax1 = fig.add_subplot(gs[0], projection=NA_proj)
     ax1.set_extent(NA_extent)
@@ -448,9 +448,21 @@ def summary_figure(dataframe, vgp_mode1, vgp_mode2,
     QQ_test_img_path =  pole_folder + '/QQ_mode1.png'
     if os.path.exists(QQ_test_img_path):
         QQ_test_img = mpimg.imread(QQ_test_img_path)
-        ax6 = fig.add_subplot(gs[3, :])
+        ax6 = fig.add_subplot(gs[7])
         ax6.imshow(QQ_test_img)
         ax6.axis("off")
+    
+    ax5 = fig.add_subplot(gs[6])
+    ax5.set_title('Age distribution of VGPs')
+    ax5.set_xlabel(r'Age (Ma)')
+    
+    if dataframe['mean_age'].any() == False:
+        dataframe['mean_age']=(dataframe['min_age'] + dataframe['max_age'])/2
+    
+    if (dataframe['mean_age'].max() - dataframe['mean_age'].min())<20:
+        ax5.set_xlim(dataframe['mean_age'].mean()-10, dataframe['mean_age'].mean()+10)
+        
+    sns.histplot(dataframe, x = 'mean_age', ax=ax5)
 
     plt.tight_layout()
     plt.savefig(pole_folder + '/pole_summary.png',dpi=450)
