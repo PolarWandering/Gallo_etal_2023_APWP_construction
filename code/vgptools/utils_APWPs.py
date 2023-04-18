@@ -129,13 +129,12 @@ def weighted_moving_average_APWP(data, plon_label = 'plon', plat_label='plat', a
         window_min = age - (window_length / 2.)
         window_max = age + (window_length / 2.)
         poles_ = data.loc[(data[age_label] >= window_min) & (data[age_label] <= window_max)]
+        if poles_.empty: continue
         
-        # weights = [(1-0.1)*(1-(np.abs( row.age - age ) / ((max_age - min_age) / 2)))+0.1 for i, row in poles.iterrows()]
-        weights = [(1-(np.abs( row.age - age ) / ((window_max - window_min) / 2))) for i, row in poles_.iterrows()]
+        
+        weights = [(1-(np.abs( row[age_label] - age ) / ((window_max - window_min) / 2))) for i, row in poles_.iterrows()]
         poles = poles_.sample(n = len(poles_), weights = weights, replace = True)
-        
-        if poles.empty: continue
-        
+             
         number_studies = len(poles['Study'].unique())
         mean = ipmag.fisher_mean(dec=poles[plon_label].tolist(), inc=poles[plat_label].tolist())
         
