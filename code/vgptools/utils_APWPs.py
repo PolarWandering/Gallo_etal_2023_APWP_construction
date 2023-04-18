@@ -129,9 +129,8 @@ def weighted_moving_average_APWP(data, plon_label = 'plon', plat_label='plat', a
         window_min = age - (window_length / 2.)
         window_max = age + (window_length / 2.)
         poles_ = data.loc[(data[age_label] >= window_min) & (data[age_label] <= window_max)]
-        if poles_.empty: continue
-        
-        
+        if poles_.shape[0]<3: continue
+            
         weights = [(1-(np.abs( row[age_label] - age ) / ((window_max - window_min) / 2))) for i, row in poles_.iterrows()]
         poles = poles_.sample(n = len(poles_), weights = weights, replace = True)
              
@@ -145,11 +144,15 @@ def weighted_moving_average_APWP(data, plon_label = 'plon', plat_label='plat', a
         effective_age_median = np.round(np.median(poles[age_label].to_numpy()))
         
         ArrayXYZ = np.array([spherical2cartesian([np.radians(i[plat_label]), np.radians(i[plon_label])]) for _,i in poles.iterrows()])        
-        if len(ArrayXYZ) > 3:
-            shapes = shape(ArrayXYZ)
-            PrinComp=PD(ArrayXYZ)
-            eVal, eVec = eigen_decomposition(ArrayXYZ)
-            elong_dir = np.degrees(cartesian2spherical(eVec[:,1]))[1] # from T&K2004 (declination od the intermediate Evec)
+        if len(ArrayXYZ) > 4:
+            shapes = shape(ArrayXYZ)         
+            try:
+                PrinComp=PD(ArrayXYZ)            
+                eVal, eVec = eigen_decomposition(ArrayXYZ)
+                elong_dir = np.degrees(cartesian2spherical(eVec[:,1]))[1] # from T&K2004 (declination od the intermediate Evec)
+            except:
+                shapes = [np.nan,np.nan,np.nan,np.nan]
+
             # mean['inc']=np.degrees(cartesian2spherical(PrinComp))[0]
             # mean['dec']=np.degrees(cartesian2spherical(PrinComp))[1]
         else:
