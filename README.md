@@ -18,6 +18,8 @@
 
 Available at: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PolarWandering/Gallo_etal_2023_APWP_construction/HEAD)
 
+[![DOI](https://zenodo.org/badge/599666881.svg)](https://zenodo.org/badge/latestdoi/599666881)
+
 This manuscript is under review at *Geophysical Research Letters*     
 
 ## code
