@@ -20,7 +20,7 @@ Available at: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.
 
 [![DOI](https://zenodo.org/badge/599666881.svg)](https://zenodo.org/badge/latestdoi/599666881)
 
-This manuscript is under review at *Geophysical Research Letters*     
+This manuscript is accepted at *Geophysical Research Letters*     
 
 ## code
 
