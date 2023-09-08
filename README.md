@@ -20,7 +20,9 @@ Available at: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.
 
 [![DOI](https://zenodo.org/badge/599666881.svg)](https://zenodo.org/badge/latestdoi/599666881)
 
-This manuscript is accepted at *Geophysical Research Letters*     
+This manuscript is was published in *Geophysical Research Letters*:
+
+Gallo, L. C., Domeier, M., Sapienza, F., Swanson-Hysell, N. L., Vaes, B., Zhang, Y., et al. (2023). Embracing uncertainty to resolve polar wander: A case study of Cenozoic North America. Geophysical Research Letters, 50, e2023GL103436. https://doi.org/10.1029/2023GL103436
 
 ## code
 
